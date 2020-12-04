@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 防抖： n秒内只要你触发事件   就重新计时
+         事件处理函数的程序将永远不能被执行  -->
+    <!-- 节流： 事件被触发 在特定时间内只执行一次  -->
+    <input type="text" id="input">
+
+    <script>
+        var oinput = document.getElementById('input')
+        var t =  null
+        oinput.onkeyup = throttle(check, 1000)
+        function check(){
+            var value = this.value
+            if(value.length < 6){
+                console.log("invalid");
+            }else{
+                console.log("success")
+            }
+        }
+        function throttle(fn, delay){
+            var t = null,
+            begin = new Date().getTime()
+            return function(){
+                var _self = this,
+                args = arguments,
+                cur = new Date().getTime()
+                clearTimeout(t)
+                if(cur - begin >= delay){
+                    fn.apply(_self, args)
+                    begin =  cur
+                }else{
+                    t = setTimeout(function(){
+                        fn.apply(_self, args)
+                    },delay)
+                }
+            }
+        }
+        //鼠标行为预测技术
+        
+    </script>
+</body>
+</html>
